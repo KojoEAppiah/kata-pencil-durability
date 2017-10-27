@@ -1,7 +1,6 @@
 import unittest
 from Pencil import Pencil
 
-
 class PencilTests(unittest.TestCase):
 
     def test_write(self):
