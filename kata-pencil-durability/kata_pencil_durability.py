@@ -44,6 +44,10 @@ class Pencil:
 
         return False
 
+    def erase(self, word_to_erase):
+        word_index = self.paper.rfind(word_to_erase)
+        self.paper = self.paper[:word_index] + (" "*len(word_to_erase)) + self.paper[word_index + len(word_to_erase) : ]
+
     def getDurability(self):
         return self.durability
 
@@ -81,6 +85,17 @@ class PencilTests(unittest.TestCase):
         self.assertEqual(True, pencil.sharpen())
         self.assertEqual(False, pencil.sharpen())
 
+    def test_erase(self):
+        pencil = Pencil(50, 3)
+        pencil.write("Here are some play words to play with.")
+        pencil.erase("play")
+        self.assertEqual("Here are some play words to      with.", pencil.paper)
+        pencil.erase("play")
+        self.assertEqual("Here are some      words to      with.", pencil.paper)
+        pencil.erase("Here")
+        self.assertEqual("     are some      words to      with.", pencil.paper)
+        pencil.erase("words")
+        self.assertEqual("     are some            to      with.", pencil.paper)
 
 
 if __name__ == '__main__':
