@@ -58,5 +58,12 @@ class PencilTests(unittest.TestCase):
         pencil.edit("onion")
         self.assertEqual("An onion a day keeps the doctor away.", pencil.paper)
 
+    def test_edit_over_text(self):
+        pencil = Pencil(100, 3, 7)
+        pencil.write("An apple a day keeps the doctor away.")
+        pencil.erase("apple")
+        pencil.edit("onionion")
+        self.assertEqual("An onioni@nday keeps the doctor away.", pencil.paper)
+
 if __name__ == '__main__':
     unittest.main()
