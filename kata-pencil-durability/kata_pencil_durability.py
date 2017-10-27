@@ -2,10 +2,11 @@ import unittest
 
 class Pencil:
 
-    def __init__(self, durability):
+    def __init__(self, durability, length):
         self.paper =""
         self.initial_durability = durability
         self.durability = durability
+        self.length = length
 
     def write(self, text):
         if self.durability - len(text) > 0:
@@ -36,7 +37,12 @@ class Pencil:
 
 
     def sharpen(self):
-        self.durability = self.initial_durability
+        if self.length > 0:
+            self.durability = self.initial_durability
+            self.length -= 1
+            return True
+
+        return False
 
     def getDurability(self):
         return self.durability
@@ -49,26 +55,33 @@ class Pencil:
 class PencilTests(unittest.TestCase):
 
     def test_write(self):
-        pencil = Pencil(20)
+        pencil = Pencil(20, 3)
         pencil.write("Hello there")
         self.assertEqual("Hello there", pencil.print())
 
     def test_durabililty_decline_lowercase(self):
-        pencil = Pencil(5)
+        pencil = Pencil(5, 3)
         pencil.write("abcdefghi")
         self.assertEqual("abcde    ", pencil.print())
 
     def test_durabililty_decline_uppercase(self):
-        pencil = Pencil(5)
+        pencil = Pencil(5, 3)
         pencil.write("ABCDEFG")
         self.assertEqual("AB     ", pencil.print())
 
     def test_sharpen(self):
-        pencil = Pencil(5)
+        pencil = Pencil(5, 3)
         pencil.write("123")
         self.assertEqual(2, pencil.durability)
+        self.assertEqual(3, pencil.length)
         pencil.sharpen()
         self.assertEqual(5, pencil.durability)
+        self.assertEqual(2, pencil.length)
+        pencil.sharpen()
+        self.assertEqual(True, pencil.sharpen())
+        self.assertEqual(False, pencil.sharpen())
+
+
 
 if __name__ == '__main__':
     unittest.main()
