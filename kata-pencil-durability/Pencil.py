@@ -64,6 +64,19 @@ class Pencil():
     def edit(self, word_to_add):
         if len(word_to_add) <= len(self.last_erased):
             self.paper = self.paper[:self.erased_position] + word_to_add + self.paper[self.erased_position + len(word_to_add):]
+        else:
+            new_word = ""
+            counter = 0
+            while counter < len(word_to_add):
+                if self.paper[self.erased_position + counter] != " ":
+                    new_word += "@"
+                else:
+                    new_word += word_to_add[counter]
+
+                counter += 1
+
+            self.paper = self.paper[:self.erased_position] + new_word + self.paper[self.erased_position + len(new_word):]
+
 
     def getDurability(self):
         return self.durability

@@ -57,5 +57,12 @@ class PencilTests(unittest.TestCase):
         pencil.edit("onion")
         self.assertEqual("An onion a day keeps the doctor away.", pencil.paper)
 
+    def test_partial_word_edit(self):
+        pencil = Pencil(100, 3, 3)
+        pencil.write("An apple a day keeps the doctor away.")
+        pencil.erase("apple")
+        pencil.edit("pellate")
+        self.assertEqual("An appell@t@ay keeps the doctor away.", pencil.paper)
+
 if __name__ == '__main__':
     unittest.main()
